@@ -36,9 +36,18 @@ def display_basket():
     pass
 
 
-def remove_product(product):
-
-    pass
+def remove_product(productIndex):
+    resIndex = int(productIndex) - 1
+    if (resIndex >= 0):
+        if (len(cart) >= int(productIndex)):
+            cart.pop(resIndex)
+            print("Το προϊόν αφαιρέθηκε επιτυχώς από το καλάθι αγορών.")
+            display_basket()
+        else:
+            print("Δεν υπάρχει στο καλάθι σας.")
+            pass
+    else:
+        pass
 
 
 def buy_products(cart):
@@ -103,12 +112,22 @@ if __name__ == "__main__":
 
             # 3. Αφαίρεση προϊόντος
             elif choice == "3":
-                answer = input("Επέλεξε γραμμή προϊόντος προς αφαίρεση: ")
-                confirm = input("Παρακαλώ επιβεβαιώστε την αφαίρεση (ν/ο): ")
+                answer = None
+                while answer != "ο":
+                    if not cart:
+                        print("Άδειο καλάθι")
+                        break
+                    else:
+                        display_basket()
+                        product = input(
+                            "Επέλεξε γραμμή προϊόντος προς αφαίρεση: ")
+                        confirm = input(
+                            "Παρακαλώ επιβεβαιώστε την αφαίρεση (ν/ο): ")
+                        if (confirm == "ν"):
+                            remove_product(product)
 
-                if (confirm == "ν"):
-                    remove_product(answer)
-                    print("Το προϊόν αφαιρέθηκε επιτυχώς από το καλάθι αγορών ")
+                        answer = input(
+                            "Επιθυμείτε να διαγράψετε άλλο προϊόν (ν/ο): ")
 
             # 4. Πληρωμή
             elif choice == "4":
