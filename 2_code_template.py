@@ -70,9 +70,10 @@ def buy_products(cart):
 
         if (buy == ""):
             print("Σας ευχαριστούμε για την αγορά σας!")
-    else:
+    elif (confirm == "ο"):
         print("Ακύρωση παραγγελίας.")
-
+    else:
+        print("Μή έγκυρη επιλογή. Πληκτρολογήστε ν ή ο.")
     pass
 
 
@@ -90,18 +91,25 @@ if __name__ == "__main__":
         if (choice == "1" or choice == "2" or choice == "3" or choice == "4"):
             # 1. Προσθήκη προϊόντων στο καλάθι
             if choice == "1":
-                answer = None
-                while answer != "ο":
-                    index = 0
-                    for i in products:
-                        res = ("Προϊόν #" + str(index) + ': ' +
-                               str(i[0]) + ' ' + str(i[1]))
-                        print('\n'.join([res]))
-                        index += 1
-                    product = input("Επέλεξε αριθμό προϊόντος: ")
-                    quantity = input("Εισάγετε την επιθυμητή ποσότητα: ")
+                answer = 'ν'
+                while answer != "":
+                    if (answer == "ν"):
+                        index = 0
+                        for i in products:
+                            res = ("Προϊόν #" + str(index) + ': ' +
+                                   str(i[0]) + ' ' + str(i[1]))
+                            print('\n'.join([res]))
+                            index += 1
+                        product = input("Επέλεξε αριθμό προϊόντος: ")
+                        quantity = input("Εισάγετε την επιθυμητή ποσότητα: ")
 
-                    add_products(product, quantity)
+                        add_products(product, quantity)
+
+                    elif (answer == "ο"):
+                        print("Ακύρωση προσθήκη προϊόντων στο καλάθι.")
+                        break
+                    else:
+                        print("Μή έγκυρη επιλογή. Πληκτρολογήστε ν ή ο.")
 
                     answer = input(
                         "Επιθυμείτε να εισάγετε άλλο προϊόν (ν/ο): ")
@@ -112,19 +120,29 @@ if __name__ == "__main__":
 
             # 3. Αφαίρεση προϊόντος
             elif choice == "3":
-                answer = None
-                while answer != "ο":
+                answer = 'ν'
+                while answer != "":
                     if not cart:
                         print("Άδειο καλάθι")
                         break
                     else:
-                        display_basket()
-                        product = input(
-                            "Επέλεξε γραμμή προϊόντος προς αφαίρεση: ")
-                        confirm = input(
-                            "Παρακαλώ επιβεβαιώστε την αφαίρεση (ν/ο): ")
-                        if (confirm == "ν"):
-                            remove_product(product)
+                        if (answer == "ν"):
+                            display_basket()
+                            product = input(
+                                "Επέλεξε γραμμή προϊόντος προς αφαίρεση: ")
+                            confirm = input(
+                                "Παρακαλώ επιβεβαιώστε την αφαίρεση (ν/ο): ")
+
+                            if (confirm == "ν"):
+                                remove_product(product)
+                            else:
+                                print("Η αφαίρεση δεν πραγματοποιήθηκε.")
+
+                        elif (answer == "ο"):
+                            print("Ακύρωση διαγραφή προϊόντων απο το καλάθι.")
+                            break
+                        else:
+                            print("Μή έγκυρη επιλογή. Πληκτρολογήστε ν ή ο.")
 
                         answer = input(
                             "Επιθυμείτε να διαγράψετε άλλο προϊόν (ν/ο): ")
